@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="newFaculty">Добавить</string>
+    <string name="cancel">отмена</string>
+    <string name="commit">подтверждение</string>
+    <string name="inputTitle">Укажите значение</string>
+    <string name="inputFaculty">Наименование факультета</string>
+    <string name="inputGroup">Номер группы</string>
+    <string name="lastName">Фамилия</string>
+    <string name="firstName">Имя</string>
+    <string name="middleName">Отчество</string>
+    <string name="insertLastName">Введите Фамилию</string>
+    <string name="insertFirstName">Введите Имя</string>
+    <string name="InsertMiddleName">Введите Отчество</string>
+    <string name="phone">Телефон</string>
+    <string name="insertPhone">Номер телефона</string>
+    <string name="birth">Дата рождения</string>
+    <string name="groupList">Список групп</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
