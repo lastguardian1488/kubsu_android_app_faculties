@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity(), FacultyFragment.Callbacks,GroupFragmen
             }
             1 -> {//Группа
                 tvInfo.text = getString(R.string.inputGroup)
-                builder.setPositiveButton(getString(R.string.commit)) { _, _, ->
+                builder.setPositiveButton(getString(R.string.commit)) { _, _ ->
                     val s = nameInput.text.toString()
                     if (s.isNotBlank()) {
                         AppRepository.get().newGroup(GroupFragment.getFacultyId, s)

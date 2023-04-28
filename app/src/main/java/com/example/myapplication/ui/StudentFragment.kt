@@ -19,8 +19,7 @@ import java.util.*
 const val STUDENT_TAG="StudentFragment"
 
 class StudentFragment : Fragment() {
-
-
+    private lateinit var viewModel: StudentViewModel
     private var _binding: FragmentStudentBinding? = null
     private val binding
         get() = _binding!!
@@ -34,8 +33,6 @@ class StudentFragment : Fragment() {
             return StudentFragment()
         }
     }
-
-    private lateinit var viewModel: StudentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,7 +80,7 @@ class StudentFragment : Fragment() {
         builder.setCancelable(true)
         builder.setMessage("Сохранить изменения?")
         builder.setTitle("Подтверждение")
-        builder.setPositiveButton(getString(R.string.commit)) { _, _, ->
+        builder.setPositiveButton(getString(R.string.commit)) { _, _ ->
             var p = true
             binding.etFirstName.text.toString().ifBlank {
                 p = false
@@ -134,7 +131,7 @@ class StudentFragment : Fragment() {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
-        builder.setNegativeButton(R.string.cancel) { _, _, ->
+        builder.setNegativeButton(R.string.cancel) { _, _ ->
             backPressedCallback.isEnabled = false
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
