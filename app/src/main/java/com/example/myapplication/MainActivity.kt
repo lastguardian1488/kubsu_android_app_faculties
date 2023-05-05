@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), FacultyFragment.Callbacks,GroupFragmen
                 builder.setPositiveButton(getString(R.string.commit)) { _, _, ->
                     val s = nameInput.text.toString()
                     if (s.isNotBlank()) {
-                        AppRepository.get().newFaculty(s)
+//                        AppRepository.get().newFaculty(s)
                     }
                 }
             }
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), FacultyFragment.Callbacks,GroupFragmen
                 builder.setPositiveButton(getString(R.string.commit)) { _, _ ->
                     val s = nameInput.text.toString()
                     if (s.isNotBlank()) {
-                        AppRepository.get().newGroup(GroupFragment.getFacultyId, s)
+//                        AppRepository.get().newGroup(GroupFragment.getFacultyId, s)
                     }
                 }
             }

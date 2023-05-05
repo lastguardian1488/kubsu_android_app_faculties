@@ -38,7 +38,7 @@ class GroupListFragment(private val group : Group) : Fragment() {
         binding.rvGroupList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewModel = ViewModelProvider(this)[GroupListViewModel::class.java]
-        binding.rvGroupList.adapter = GroupListAdapter(group.students ?: emptyList())
+//        binding.rvGroupList.adapter = GroupListAdapter(group.students ?: emptyList())
     }
 
     private inner class GroupHolder(view: View) : RecyclerView.ViewHolder(view),
@@ -47,8 +47,8 @@ class GroupListFragment(private val group : Group) : Fragment() {
 
         fun bind(student: Student) {
             this.student = student
-            val s = "${student.lastName} ${student.firstName[0]}. ${student.middleName[0]}."
-            itemView.findViewById<TextView>(R.id.tvElement).text = s
+//            val s = "${student.lastName} ${student.firstName[0]}. ${student.middleName[0]}."
+//            itemView.findViewById<TextView>(R.id.tvElement).text = s
             itemView.findViewById<ConstraintLayout>(R.id.studButtons).visibility = View.GONE
         }
 
@@ -66,7 +66,7 @@ class GroupListFragment(private val group : Group) : Fragment() {
                     commitDeleteDialog(student)
                 }
                 itemView.findViewById<ImageButton>(R.id.studEditBtn).setOnClickListener {
-                    callbacks?.showStudent(group.id, student)
+//                    callbacks?.showStudent(group.id, student)
                 }
             }
         }
@@ -78,7 +78,7 @@ class GroupListFragment(private val group : Group) : Fragment() {
         builder.setMessage("Удалить студента ${student.lastName} ${student.firstName} ${student.middleName} из списка?")
         builder.setTitle("Подтверждение")
         builder.setPositiveButton(getString(R.string.commit)) { _, _ ->
-            viewModel.deleteStudent(group.id, student)
+//            viewModel.deleteStudent(group.id, student)
         }
         builder.show()
     }

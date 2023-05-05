@@ -25,7 +25,7 @@ class FacultyFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private var adapter: FacultyListAdapter = FacultyListAdapter(emptyList())
+//    private var adapter: FacultyListAdapter = FacultyListAdapter(emptyList())
 
     companion object {
         fun newInstance() = FacultyFragment()
@@ -42,7 +42,7 @@ class FacultyFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[FacultyViewModel::class.java]
         viewModel.university.observe(viewLifecycleOwner) {
@@ -50,9 +50,9 @@ class FacultyFragment : Fragment() {
             binding.rvFaculty.adapter = adapter
         }
         callbacks?.setTitle(FACULTY_TITLE)
-    }
+    }*/
 
-    private inner class FacultyHolder(view: View) : RecyclerView.ViewHolder(view),
+    /*private inner class FacultyHolder(view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener {
         lateinit var faculty: Faculty
 
@@ -68,9 +68,9 @@ class FacultyFragment : Fragment() {
         override fun onClick(v: View?) {
             callbacks?.showFaculty(faculty.id)
         }
-    }
+    }*/
 
-    private inner class FacultyListAdapter(private val items: List<Faculty>) :
+    /*private inner class FacultyListAdapter(private val items: List<Faculty>) :
         RecyclerView.Adapter<FacultyHolder>() {
         override fun onCreateViewHolder(
             parent: ViewGroup,
@@ -85,7 +85,7 @@ class FacultyFragment : Fragment() {
         override fun onBindViewHolder(holder: FacultyHolder, position: Int) {
             holder.bind(items[position])
         }
-    }
+    }*/
 
     interface Callbacks {
         fun setTitle(_title: String)

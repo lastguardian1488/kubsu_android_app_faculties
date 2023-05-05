@@ -11,14 +11,14 @@ class GroupViewModel : ViewModel() {
 
     private var facultyID: UUID? = null
 
-    init {
+    /*init {
         AppRepository.get().university.observeForever {
             faculty.postValue(it.find { faculty -> faculty.id == facultyID })
         }
-    }
+    }*/
 
-    fun setFacultyId(facultyID: UUID) {
+    /*fun setFacultyId(facultyID: UUID) {
         this.facultyID = facultyID
         faculty.postValue(AppRepository.get().university.value?.find { faculty -> faculty.id == facultyID })
-    }
+    }*/
 }

@@ -1,9 +1,19 @@
 package com.example.myapplication.data
 
-import java.util.*
+import androidx.room.*
+
+@Entity(tableName = "faculty",
+    indices = [Index("group_name")],
+    foreignKeys = [
+        ForeignKey(
+            entity = Faculty::class,
+            parentColumns = ["id"],
+            childColumns = ["faculty_id"])
+    ]
+)
 
 data class Group(
-    val id : UUID = UUID.randomUUID(),
-    var name : String="") {
-    var students: List<Student> = emptyList()
-}
+    @PrimaryKey(autoGenerate = true) val id : Long,
+    @ColumnInfo(name = "group_name") val name : String?,
+    @ColumnInfo(name = "faculty_id") val facultyID : Long
+)

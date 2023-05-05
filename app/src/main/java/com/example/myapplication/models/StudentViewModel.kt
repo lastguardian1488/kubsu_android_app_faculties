@@ -6,6 +6,6 @@ import com.example.myapplication.repository.AppRepository
 import java.util.*
 
 class StudentViewModel : ViewModel() {
-    fun newStudent(groupID: UUID, student: Student) =
-        AppRepository.get().newStudent(groupID, student)
+    /*fun newStudent(groupID: UUID, student: Student) =
+        AppRepository.get().newStudent(groupID, student)*/
 }

@@ -1,9 +1,11 @@
 package com.example.myapplication.data
 
-import java.util.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "univesity")
 data class Faculty(
-    val id : UUID = UUID.randomUUID(),
-    var name : String="") {
-    var groups: List<Group> = emptyList()
-}
+    @PrimaryKey(autoGenerate = true) val id : Long,
+    @ColumnInfo(name = "faculty_name") val name : String?
+)

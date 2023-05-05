@@ -53,7 +53,7 @@ class StudentFragment : Fragment() {
             binding.etMiddleName.setText(student!!.middleName)
             binding.etPhone.setText(student!!.phone)
             val dt = GregorianCalendar().apply {
-                time = student!!.birthDate
+//                time = student!!.birthDate
             }
             binding.dpCalendar.init(
                 dt.get(Calendar.YEAR),
@@ -108,25 +108,25 @@ class StudentFragment : Fragment() {
                     set(GregorianCalendar.MONTH, binding.dpCalendar.month)
                     set(GregorianCalendar.DAY_OF_MONTH, binding.dpCalendar.dayOfMonth)
                 }
-                if (student == null) {
-                    student = Student()
-                    student?.apply {
-                        firstName = binding.etFirstName.text.toString()
-                        lastName = binding.etLastName.text.toString()
-                        middleName = binding.etMiddleName.text.toString()
-                        phone = binding.etPhone.text.toString()
-                        birthDate = selectedDate.time
-                    }
-                    viewModel.newStudent(groupID!!, student!!)
-                } else {
-                    student?.apply {
-                        firstName = binding.etFirstName.text.toString()
-                        lastName = binding.etLastName.text.toString()
-                        middleName = binding.etMiddleName.text.toString()
-                        phone = binding.etPhone.text.toString()
-                        birthDate = selectedDate.time
-                    }
-                }
+//                if (student == null) {
+//                    student = Student()
+//                    student?.apply {
+//                        firstName = binding.etFirstName.text.toString()
+//                        lastName = binding.etLastName.text.toString()
+//                        middleName = binding.etMiddleName.text.toString()
+//                        phone = binding.etPhone.text.toString()
+//                        birthDate = selectedDate.time
+//                    }
+//                    viewModel.newStudent(groupID!!, student!!)
+//                } else {
+//                    student?.apply {
+//                        firstName = binding.etFirstName.text.toString()
+//                        lastName = binding.etLastName.text.toString()
+//                        middleName = binding.etMiddleName.text.toString()
+//                        phone = binding.etPhone.text.toString()
+//                        birthDate = selectedDate.time
+//                    }
+//                }
                 backPressedCallback.isEnabled = false
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }

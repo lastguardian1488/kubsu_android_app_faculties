@@ -52,7 +52,7 @@ class GroupFragment private constructor(): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[GroupViewModel::class.java]
-        viewModel.setFacultyId(getFacultyId)
+//        viewModel.setFacultyId(getFacultyId)
         viewModel.faculty.observe(viewLifecycleOwner) {
             updateUI(it)
             callbacks?.setTitle(it?.name ?: "")
@@ -64,7 +64,7 @@ class GroupFragment private constructor(): Fragment() {
     private fun updateUI(faculty: Faculty?) {
         binding.tabGroup.clearOnTabSelectedListeners()
         binding.tabGroup.removeAllTabs()
-        binding.faBtnNewStudent.visibility = if ((faculty?.groups?.size ?: 0) > 0) {
+        /*binding.faBtnNewStudent.visibility = if ((faculty?.groups?.size ?: 0) > 0) {
             binding.faBtnNewStudent.setOnClickListener {
                 callbacks?.showStudent(faculty?.groups!![tabPosition].id, null)
             }
@@ -75,18 +75,18 @@ class GroupFragment private constructor(): Fragment() {
             binding.tabGroup.addTab(binding.tabGroup.newTab().apply {
                 text = i.toString()
             })
-        }
+        }*/
 
-        val adapter = GroupPageAdapter(requireActivity(), faculty!!)
-        binding.vpGroup.adapter = adapter
+//        val adapter = GroupPageAdapter(requireActivity(), faculty!!)
+//        binding.vpGroup.adapter = adapter
         TabLayoutMediator(binding.tabGroup, binding.vpGroup, true, true) { tab, pos ->
-            tab.text = faculty?.groups?.get(pos)?.name
+//            tab.text = faculty?.groups?.get(pos)?.name
         }.attach()
 
         binding.tabGroup.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tabPosition = tab?.position!!
-                _group = faculty.groups[tabPosition]
+//                _group = faculty.groups[tabPosition]
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -99,7 +99,7 @@ class GroupFragment private constructor(): Fragment() {
         })
     }
 
-    private inner class GroupPageAdapter(fa: FragmentActivity, private val faculty: Faculty) :
+    /*private inner class GroupPageAdapter(fa: FragmentActivity, private val faculty: Faculty) :
         FragmentStateAdapter(fa) {
         override fun getItemCount(): Int {
             return faculty.groups?.size!!
@@ -108,7 +108,7 @@ class GroupFragment private constructor(): Fragment() {
         override fun createFragment(position: Int): Fragment {
             return GroupListFragment(faculty.groups?.get(position)!!)
         }
-    }
+    }*/
 
     interface Callbacks {
         fun setTitle(_title: String)

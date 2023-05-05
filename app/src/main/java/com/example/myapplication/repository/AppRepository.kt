@@ -48,7 +48,7 @@ class AppRepository private constructor() {
         }
     }
 
-    fun newFaculty(name: String) {
+    /*fun newFaculty(name: String) {
         val faculty = Faculty(name = name)
         val list: ArrayList<Faculty> =
             if (university.value != null) {
@@ -57,10 +57,9 @@ class AppRepository private constructor() {
                 ArrayList()
         list.add(faculty)
         university.postValue(list)//оповещение всех пользователей
+    }*/
 
-    }
-
-    fun newGroup(facultyID: UUID, name: String) {
+    /*fun newGroup(facultyID: UUID, name: String) {
         val u = university.value ?: return
         val faculty = u.find { it.id == facultyID } ?: return
         val group = Group(name = name)
@@ -72,9 +71,9 @@ class AppRepository private constructor() {
         faculty.groups = list
         university.postValue(u)
 
-    }
+    }*/
 
-    fun newStudent(groupID: UUID, student: Student) {
+    /*fun newStudent(groupID: UUID, student: Student) {
         val u = university.value ?: return
         val faculty = u.find { it.groups.find { it.id == groupID } != null } ?: return
         val group = faculty.groups.find { it.id == groupID }
@@ -85,9 +84,9 @@ class AppRepository private constructor() {
         list.add(student)
         group.students = list
         university.postValue(u)
-    }
+    }*/
 
-    fun deleteStudent(groupID: UUID, student: Student) {
+    /*fun deleteStudent(groupID: UUID, student: Student) {
         val u = university.value ?: return
         val faculty = u.find { it.groups.find { it.id == groupID } != null } ?: return
         val group = faculty.groups.find { it.id == groupID }
@@ -96,9 +95,9 @@ class AppRepository private constructor() {
         list.remove(student)
         group.students = list
         university.postValue(u)
-    }
+    }*/
 
-    fun editStudent(groupID: UUID, student: Student) {
+    /*fun editStudent(groupID: UUID, student: Student) {
         val u = university.value ?: return
         val faculty = u.find { it.groups.find { it.id == groupID } != null } ?: return
         val group = faculty.groups.find { it.id == groupID } ?: return
@@ -113,5 +112,5 @@ class AppRepository private constructor() {
         list.add(i, student)
         group.students = list
         university.postValue(u)
-    }
+    }*/
 }
