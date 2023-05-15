@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "univesity")
 data class Faculty(
-    @PrimaryKey(autoGenerate = true) val id : Long,
+    @PrimaryKey(autoGenerate = true) val id : Long?,
     @ColumnInfo(name = "faculty_name") val name : String?
 )

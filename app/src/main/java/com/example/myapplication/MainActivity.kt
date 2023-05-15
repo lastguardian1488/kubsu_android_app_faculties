@@ -14,13 +14,16 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.myapplication.data.Student
 import com.example.myapplication.repository.AppRepository
 import com.example.myapplication.ui.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity(), FacultyFragment.Callbacks,GroupFragment.Callbacks, GroupListFragment.Callbacks {
     private var miNewFaculty: MenuItem? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppRepository.get().loadData(this)
+//        AppRepository.get().loadData(this)
         setContentView(R.layout.activity_main)
 
         supportFragmentManager
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity(), FacultyFragment.Callbacks,GroupFragmen
 
     override fun onStop() {
         super.onStop()
-        AppRepository.get().saveData(this)
+//        AppRepository.get().saveData(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -80,7 +83,9 @@ class MainActivity : AppCompatActivity(), FacultyFragment.Callbacks,GroupFragmen
                 builder.setPositiveButton(getString(R.string.commit)) { _, _, ->
                     val s = nameInput.text.toString()
                     if (s.isNotBlank()) {
-//                        AppRepository.get().newFaculty(s)
+                        CoroutineScope(Dispatchers.Main).launch {
+                            AppRepository.get().newFaculty(s)
+                        }
                     }
                 }
             }
@@ -89,7 +94,9 @@ class MainActivity : AppCompatActivity(), FacultyFragment.Callbacks,GroupFragmen
                 builder.setPositiveButton(getString(R.string.commit)) { _, _ ->
                     val s = nameInput.text.toString()
                     if (s.isNotBlank()) {
-//                        AppRepository.get().newGroup(GroupFragment.getFacultyId, s)
+                        CoroutineScope(Dispatchers.Main).launch {
+                            AppRepository.get().newGroup(GroupFragment.getFacultyId, s)
+                        }
                     }
                 }
             }
@@ -112,7 +119,7 @@ class MainActivity : AppCompatActivity(), FacultyFragment.Callbacks,GroupFragmen
             .commit()
     }
 
-    override fun showFaculty(id: UUID) {
+    override fun showFaculty(id: Long) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.mainFrame, GroupFragment.newInstance(id), GROUP_TAG)

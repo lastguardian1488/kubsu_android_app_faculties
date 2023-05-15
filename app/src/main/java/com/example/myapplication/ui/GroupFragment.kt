@@ -16,6 +16,9 @@ import com.example.myapplication.databinding.FragmentGroupBinding
 import com.example.myapplication.models.GroupViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 const val GROUP_TAG = "GroupFragment"
@@ -28,15 +31,17 @@ class GroupFragment private constructor(): Fragment() {
         get() = _binding!!
 
     companion object {
-        private lateinit var id: UUID
+        private var id: Long = -1
         private var _group: Group? = null
-        fun newInstance(id: UUID): GroupFragment {
+        fun newInstance(id: Long): GroupFragment {
             this.id = id
             return GroupFragment()
         }
 
         val getFacultyId
             get() = id
+        val getGroup
+            get() = _group
     }
 
     private lateinit var viewModel: GroupViewModel
@@ -52,41 +57,46 @@ class GroupFragment private constructor(): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[GroupViewModel::class.java]
-//        viewModel.setFacultyId(getFacultyId)
+        viewModel.setFaculty(getFacultyId)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val f = viewModel.getFaculty()
+            callbacks?.setTitle(f?.name ?: "UNKNOWN")
+        }
+
         viewModel.faculty.observe(viewLifecycleOwner) {
             updateUI(it)
-            callbacks?.setTitle(it?.name ?: "")
         }
     }
 
     private var tabPosition: Int = 0
 
-    private fun updateUI(faculty: Faculty?) {
+    private fun updateUI(groups: List<Group>) {
         binding.tabGroup.clearOnTabSelectedListeners()
         binding.tabGroup.removeAllTabs()
-        /*binding.faBtnNewStudent.visibility = if ((faculty?.groups?.size ?: 0) > 0) {
+        binding.faBtnNewStudent.visibility = if ((groups.size ?: 0) > 0) {
             binding.faBtnNewStudent.setOnClickListener {
-                callbacks?.showStudent(faculty?.groups!![tabPosition].id, null)
+//                callbacks?.showStudent(faculty?.groups!![tabPosition].id, null)
             }
             View.VISIBLE
         } else
             View.GONE
-        for (i in 0 until (faculty?.groups?.size ?: 0)) {
+        for (i in 0 until (groups.size ?: 0)) {
             binding.tabGroup.addTab(binding.tabGroup.newTab().apply {
                 text = i.toString()
             })
-        }*/
+        }
 
-//        val adapter = GroupPageAdapter(requireActivity(), faculty!!)
-//        binding.vpGroup.adapter = adapter
+        val adapter = GroupPageAdapter(requireActivity(), groups)
+        binding.vpGroup.adapter = adapter
         TabLayoutMediator(binding.tabGroup, binding.vpGroup, true, true) { tab, pos ->
-//            tab.text = faculty?.groups?.get(pos)?.name
+            tab.text = groups.get(pos).name
         }.attach()
 
         binding.tabGroup.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tabPosition = tab?.position!!
-//                _group = faculty.groups[tabPosition]
+                _group = groups[tabPosition]
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -99,16 +109,16 @@ class GroupFragment private constructor(): Fragment() {
         })
     }
 
-    /*private inner class GroupPageAdapter(fa: FragmentActivity, private val faculty: Faculty) :
+    private inner class GroupPageAdapter(fa: FragmentActivity, private val groups: List<Group>) :
         FragmentStateAdapter(fa) {
         override fun getItemCount(): Int {
-            return faculty.groups?.size!!
+            return (groups.size ?: 0)
         }
 
         override fun createFragment(position: Int): Fragment {
-            return GroupListFragment(faculty.groups?.get(position)!!)
+            return GroupListFragment(groups.get(position))
         }
-    }*/
+    }
 
     interface Callbacks {
         fun setTitle(_title: String)
