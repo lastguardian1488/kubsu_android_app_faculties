@@ -21,6 +21,9 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), FacultyFragment.Callbacks,GroupFragment.Callbacks, GroupListFragment.Callbacks {
     private var miNewFaculty: MenuItem? = null
+    // TODO:
+    //  удаление и изменение факультетов
+    //  удаление и изменение групп
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        AppRepository.get().loadData(this)
@@ -110,7 +113,7 @@ class MainActivity : AppCompatActivity(), FacultyFragment.Callbacks,GroupFragmen
         title = _title
     }
 
-    override fun showStudent(groupID: UUID, student: Student?) {
+    override fun showStudent(groupID: Long, student: Student?) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.mainFrame, StudentFragment.newInstance(groupID, student), STUDENT_TAG)

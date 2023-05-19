@@ -21,6 +21,7 @@ const val SHARED_PREFERENCES_NAME = "UniversityAppPrefs"
 class AppRepository private constructor() {
     var university: MutableLiveData<List<Faculty>> = MutableLiveData()
     var faculty : MutableLiveData<List<Group>> = MutableLiveData()
+    var group : MutableLiveData<List<Student>> = MutableLiveData()
 
     companion object {
         private var INSTANCE: AppRepository? = null
@@ -44,6 +45,7 @@ class AppRepository private constructor() {
 
     val universityDAO = db.getDao()
 
+    //TODO : delete all that related to shared_preferences (because room saves application data)
     /*fun saveData(context: Context) {
         val sharedPreferences =
             context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
@@ -108,6 +110,42 @@ class AppRepository private constructor() {
         }
         job.join()
         return f
+    }
+
+    suspend fun getStudent(studentID : Long, groupID: Long) : Student? {
+        var s : Student? = null
+        val job = CoroutineScope(Dispatchers.IO).launch {
+            s = universityDAO.getStudent(studentID, groupID)
+        }
+        job.join()
+        return s
+    }
+
+    suspend fun newStudent(firstName: String, lastName : String, middleName : String, phone : String, birthDate : Long, groupID: Long) {
+        val student = Student(
+            id = null,
+            firstName = firstName,
+            lastName = lastName,
+            middleName = middleName,
+            phone = phone,
+            birthDate = birthDate,
+            groupID = groupID)
+        withContext(Dispatchers.IO) {
+            universityDAO.insertNewStudent(student)
+            getGroupStudents(groupID)
+        }
+    }
+
+    suspend fun editStudent(id: Long, firstName: String, lastName : String, middleName : String, phone : String, birthDate : Long, groupID: Long) {
+        var s = getStudent(id, groupID)!!
+        s.firstName = firstName
+        s.lastName = lastName
+        s.middleName = middleName
+        s.phone = phone
+        s.birthDate = birthDate
+        withContext(Dispatchers.IO) {
+            universityDAO.updateStudent(s)
+        }
     }
 
     /*fun newGroup(facultyID: UUID, name: String) {

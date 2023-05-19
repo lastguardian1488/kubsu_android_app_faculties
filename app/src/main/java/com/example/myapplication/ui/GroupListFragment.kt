@@ -20,7 +20,7 @@ import com.example.myapplication.databinding.FragmentGroupListBinding
 import com.example.myapplication.models.GroupListViewModel
 import java.util.*
 
-class GroupListFragment(private val group : Group) : Fragment() {
+class GroupListFragment(private val group : List<Student>?) : Fragment() {
     private lateinit var viewModel: GroupListViewModel
     private var _binding: FragmentGroupListBinding? = null
     private val binding get() = _binding!!
@@ -38,7 +38,7 @@ class GroupListFragment(private val group : Group) : Fragment() {
         binding.rvGroupList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewModel = ViewModelProvider(this)[GroupListViewModel::class.java]
-//        binding.rvGroupList.adapter = GroupListAdapter(group.students ?: emptyList())
+        binding.rvGroupList.adapter = GroupListAdapter(group ?: emptyList())
     }
 
     private inner class GroupHolder(view: View) : RecyclerView.ViewHolder(view),
@@ -47,8 +47,8 @@ class GroupListFragment(private val group : Group) : Fragment() {
 
         fun bind(student: Student) {
             this.student = student
-//            val s = "${student.lastName} ${student.firstName[0]}. ${student.middleName[0]}."
-//            itemView.findViewById<TextView>(R.id.tvElement).text = s
+            val s = "${student.lastName} ${student.firstName!![0]}. ${student.middleName!![0]}."
+            itemView.findViewById<TextView>(R.id.tvElement).text = s
             itemView.findViewById<ConstraintLayout>(R.id.studButtons).visibility = View.GONE
         }
 
@@ -66,7 +66,7 @@ class GroupListFragment(private val group : Group) : Fragment() {
                     commitDeleteDialog(student)
                 }
                 itemView.findViewById<ImageButton>(R.id.studEditBtn).setOnClickListener {
-//                    callbacks?.showStudent(group.id, student)
+                    callbacks?.showStudent(student.groupID!!, student)
                 }
             }
         }
@@ -103,7 +103,7 @@ class GroupListFragment(private val group : Group) : Fragment() {
     }
 
     interface Callbacks {
-        fun showStudent(groupID: UUID, student: Student?)
+        fun showStudent(groupID: Long, student: Student?)
     }
 
     var callbacks: Callbacks? = null

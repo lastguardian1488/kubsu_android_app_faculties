@@ -76,7 +76,7 @@ class GroupFragment private constructor(): Fragment() {
         binding.tabGroup.removeAllTabs()
         binding.faBtnNewStudent.visibility = if ((groups.size ?: 0) > 0) {
             binding.faBtnNewStudent.setOnClickListener {
-//                callbacks?.showStudent(faculty?.groups!![tabPosition].id, null)
+                callbacks?.showStudent(groups[tabPosition].id!!, null)
             }
             View.VISIBLE
         } else
@@ -107,6 +107,7 @@ class GroupFragment private constructor(): Fragment() {
 
             }
         })
+        binding.tabGroup.selectTab(binding.tabGroup.getTabAt(tabPosition))
     }
 
     private inner class GroupPageAdapter(fa: FragmentActivity, private val groups: List<Group>) :
@@ -116,13 +117,16 @@ class GroupFragment private constructor(): Fragment() {
         }
 
         override fun createFragment(position: Int): Fragment {
-            return GroupListFragment(groups.get(position))
+            if (_group?.id != null){
+                return GroupListFragment(viewModel.loadStudents(_group?.id!!))
+            }
+            return GroupListFragment(emptyList())
         }
     }
 
     interface Callbacks {
         fun setTitle(_title: String)
-        fun showStudent(groupID: UUID, student: Student?)
+        fun showStudent(groupID: Long, student: Student?)
     }
 
     var callbacks: Callbacks? = null

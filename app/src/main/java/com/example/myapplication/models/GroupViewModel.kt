@@ -41,7 +41,7 @@ class GroupViewModel : ViewModel() {
         return f
     }
 
-    private fun loadStudents(groupID : Long): List<Student> {
+    fun loadStudents(groupID : Long): List<Student> {
         var f : List<Student> = emptyList()
         viewModelScope.launch {
             f = AppRepository.get().getGroupStudents(groupID)

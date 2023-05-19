@@ -17,13 +17,13 @@ interface UniversityDAO {
     @Delete(entity = Faculty::class)
     fun deleteFaculty(faculty: Faculty)
 
-    @Query("SELECT id, first_name FROM university order by faculty_name")
+    @Query("SELECT id, faculty_name FROM university order by faculty_name")
     fun loadUniversity() : List<Faculty>
 
     @Update(entity = Faculty::class)
     fun updateFaculty(faculty: Faculty)
 
-    @Query("SELECT id, faculty_name, from univesity where id = :id")
+    @Query("SELECT id, faculty_name from university where id = :id")
     fun getFaculty(id: Long) : Faculty
 
     //for group
@@ -45,6 +45,10 @@ interface UniversityDAO {
     //for students
     @Query("SELECT * FROM student where group_id = :groupID order by first_name")
     fun loadGroupStudents(groupID: Long): List<Student>
+
+    @Query("SELECT * FROM student where group_id = :groupID and id = :studentID")
+    fun getStudent(studentID : Long, groupID: Long) : Student
+
     @Insert(entity = Student::class, onConflict = OnConflictStrategy.REPLACE)
     fun insertNewStudent(student: Student)
 
